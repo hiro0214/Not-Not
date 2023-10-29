@@ -1,7 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { useStage } from '@/hooks/useStage';
-
-const animteDuration = 1000;
+import { animteDuration } from '@/settings';
 
 export const useController = () => {
   const { rotation, setRotation, up, left, right, down } = useStage();
@@ -79,5 +78,5 @@ export const useController = () => {
     };
   }, []);
 
-  return { initController, rotation };
+  return { initController, rotation, isRotating };
 };

@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react';
+import { animteDuration } from '@/settings';
 
-const rotate = Math.PI / 2 / 60;
+const frame = (animteDuration * 60) / 1000;
+const rotate = Math.PI / 2 / frame;
 
 export const useStage = () => {
   const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
@@ -10,11 +12,11 @@ export const useStage = () => {
   }, []);
 
   const left = useCallback(() => {
-    setRotation([0, 0, -rotate]);
+    setRotation([0, rotate, 0]);
   }, []);
 
   const right = useCallback(() => {
-    setRotation([0, 0, rotate]);
+    setRotation([0, -rotate, 0]);
   }, []);
 
   const down = useCallback(() => {
