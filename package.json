@@ -11,9 +11,6 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "src/*": [
-      "npm run format"
-    ],
     "src/**/*.{css,scss}": [
       "npm run stylelint"
     ],
