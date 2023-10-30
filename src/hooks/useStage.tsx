@@ -1,27 +1,74 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useSetAtom } from 'jotai';
+import { stageAtom } from '@/context/state';
 import { animteDuration } from '@/settings';
 
 const frame = (animteDuration * 60) / 1000;
 const rotate = Math.PI / 2 / frame;
 
 export const useStage = () => {
-  const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
+  const setStage = useSetAtom(stageAtom);
+
+  const init = useCallback(() => {
+    setStage({
+      isRotating: false,
+      rotationX: 0,
+      rotationY: 0,
+      rotationZ: 0
+    });
+  }, []);
 
   const up = useCallback(() => {
-    setRotation([-rotate, 0, 0]);
+    setStage({
+      isRotating: true,
+      rotationX: -rotate,
+      rotationY: 0,
+      rotationZ: 0
+    });
+
+    setTimeout(() => {
+      init();
+    }, animteDuration);
   }, []);
 
   const left = useCallback(() => {
-    setRotation([0, rotate, 0]);
+    setStage({
+      isRotating: true,
+      rotationX: 0,
+      rotationY: rotate,
+      rotationZ: 0
+    });
+
+    setTimeout(() => {
+      init();
+    }, animteDuration);
   }, []);
 
   const right = useCallback(() => {
-    setRotation([0, -rotate, 0]);
+    setStage({
+      isRotating: true,
+      rotationX: 0,
+      rotationY: -rotate,
+      rotationZ: 0
+    });
+
+    setTimeout(() => {
+      init();
+    }, animteDuration);
   }, []);
 
   const down = useCallback(() => {
-    setRotation([rotate, 0, 0]);
+    setStage({
+      isRotating: true,
+      rotationX: rotate,
+      rotationY: 0,
+      rotationZ: 0
+    });
+
+    setTimeout(() => {
+      init();
+    }, animteDuration);
   }, []);
 
-  return { rotation, setRotation, up, left, right, down };
+  return { up, left, right, down };
 };
